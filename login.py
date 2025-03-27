@@ -10,10 +10,14 @@ class Login:
         self.root.title("Login System")
         self.root.state('zoomed')
 
-        # Load the background image
-        self.bg_image = Image.open(r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\login.jpg")
-        self.bg_image = self.bg_image.resize((self.root.winfo_screenwidth(), self.root.winfo_screenheight()), Image.LANCZOS)
-        self.bg_photo = ImageTk.PhotoImage(self.bg_image)
+        # Load the background image safely
+        try:
+            self.bg_image = Image.open(r"D:\smart-class-attendance\smart-class-attendance-\images\images\login.jpg")
+            self.bg_image = self.bg_image.resize((self.root.winfo_screenwidth(), self.root.winfo_screenheight()), Image.LANCZOS)
+            self.bg_photo = ImageTk.PhotoImage(self.bg_image)
+        except Exception as e:
+            messagebox.showerror("Error", f"Background image not found: {str(e)}")
+            return
 
         bg_label = Label(self.root, image=self.bg_photo)
         bg_label.place(x=0, y=0, relwidth=1, relheight=1)
@@ -46,7 +50,7 @@ class Login:
         password = self.password_entry.get()
 
         try:
-            conn = mysql.connector.connect(host="localhost", user="root", password="Nandini@24", database="face_recognition")
+            conn = mysql.connector.connect(host="localhost", user="root", password="1234", database="face_recognition")
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM users WHERE username=%s AND password=%s", (username, password))
             result = cursor.fetchone()
@@ -56,9 +60,11 @@ class Login:
                 self.open_main_window()
             else:
                 messagebox.showerror("Error", "Invalid Username or Password")
-            conn.close()
         except Exception as e:
             messagebox.showerror("Error", f"Database connection error: {str(e)}")
+        finally:
+            if conn.is_connected():
+                conn.close()
 
     def open_main_window(self):
         self.root.destroy()
@@ -86,7 +92,13 @@ class Register:
         self.password_entry = Entry(self.root, font=("Arial", 15), show='*')
         self.password_entry.pack(pady=5)
 
-        
+        Label(self.root, text="Email", font=("Arial", 18)).pack(pady=10)
+        self.email_entry = Entry(self.root, font=("Arial", 15))
+        self.email_entry.pack(pady=5)
+
+        Label(self.root, text="Phone", font=("Arial", 18)).pack(pady=10)
+        self.phone_entry = Entry(self.root, font=("Arial", 15))
+        self.phone_entry.pack(pady=5)
 
         register_btn = Button(self.root, text="Register", command=self.register_user, font=("Arial", 20, "bold"),
                               bg="green", fg="white")
@@ -95,23 +107,26 @@ class Register:
     def register_user(self):
         username = self.username_entry.get()
         password = self.password_entry.get()
-        
+        email = self.email_entry.get()
+        phone = self.phone_entry.get()
 
         if username == "" or password == "" or email == "" or phone == "":
             messagebox.showerror("Error", "All fields are required")
             return
 
         try:
-            conn = mysql.connector.connect(host="localhost", user="root", password="Nandini@24", database="face_recognition")
+            conn = mysql.connector.connect(host="localhost", user="root", password="1234", database="face_recognition")
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)",
+            cursor.execute("INSERT INTO users (username, password, email, phone) VALUES (%s, %s, %s, %s)",
                            (username, password, email, phone))
             conn.commit()
-            conn.close()
             messagebox.showinfo("Success", "Registration Successful")
             self.root.destroy()
         except Exception as e:
             messagebox.showerror("Error", f"Database error: {str(e)}")
+        finally:
+            if conn.is_connected():
+                conn.close()
 
 if __name__ == "__main__":
     root = Tk()

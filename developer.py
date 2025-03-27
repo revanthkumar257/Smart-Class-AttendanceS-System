@@ -14,7 +14,7 @@ class Developer:
         title_lbl.place(x=0, y=0, width=1530, height=50)
         
         # Load and resize the background image
-        img_top = Image.open(r"C:\Users\Uday Bolla\OneDrive\Desktop\BTP NANDINI\smart-class-attendence-system\images\images\dev.png")
+        img_top = Image.open(r"D:\smart-class-attendance\smart-class-attendance-\images\images\dev.png")
         img_top = img_top.resize((1530, 745), Image.LANCZOS)
         self.photoimg_top = ImageTk.PhotoImage(img_top)
         
@@ -33,7 +33,7 @@ class Developer:
         main_frame.place(x=center_x, y=center_y, width=frame_width, height=frame_height)
         
         # Load and resize the developer's image
-        img_dev = Image.open(r"C:\Users\Uday Bolla\Downloads\WhatsApp Image 2024-11-23 at 19.19.44_0a185cb2.jpg")
+        img_dev = Image.open(r"D:\smart-class-attendance\smart-class-attendance-\images\images\class.jpg")
         img_dev = img_dev.resize((150, 150), Image.LANCZOS)
         self.photoimg_dev = ImageTk.PhotoImage(img_dev)
         
@@ -42,10 +42,10 @@ class Developer:
         img_lbl.place(x=225, y=30, width=150, height=150)
         
         # Developer information text
-        dev_label = Label(main_frame, text="Hello, my name is Nandini", font=("times new roman", 20, "bold"), fg="blue", bg="white")
+        dev_label = Label(main_frame, text="Hello, my name is REVANTH KUMAR GOLAGANI", font=("times new roman", 20, "bold"), fg="blue", bg="white")
         dev_label.place(x=120, y=200)
         
-        dev_info = Label(main_frame, text="pre-final year student at RGIPT ", font=("times new roman", 15), fg="black", bg="white")
+        dev_info = Label(main_frame, text="pre-final year student at LPU", font=("times new roman", 15), fg="black", bg="white")
         dev_info.place(x=160, y=240)
         
         # Add an additional section for a description

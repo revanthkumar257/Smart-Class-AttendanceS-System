@@ -23,25 +23,25 @@ class Student:
         self.var_gender = StringVar()
         
         # Load and resize images
-        img = Image.open(r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\1.jpg")
+        img = Image.open(r"C:\Users\srave\Desktop\images - Copy\1.jpg")
         img = img.resize((500, 130), Image.LANCZOS)
         self.photoimg1 = ImageTk.PhotoImage(img)
         f_lbl1 = Label(self.root, image=self.photoimg1)
         f_lbl1.place(x=0, y=0, width=500, height=130)
 
-        img1 = Image.open(r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\2.jpeg")
+        img1 = Image.open(r"C:\Users\srave\Desktop\images - Copy\2.jpeg")
         img1 = img1.resize((500, 130), Image.LANCZOS)
         self.photoimg2 = ImageTk.PhotoImage(img1)
         f_lbl2 = Label(self.root, image=self.photoimg2)
         f_lbl2.place(x=500, y=0, width=500, height=130)
 
-        img2 = Image.open(r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\3.jpeg")
+        img2 = Image.open(r"C:\Users\srave\Desktop\images - Copy\3.jpeg")
         img2 = img2.resize((500, 130), Image.LANCZOS)
         self.photoimg3 = ImageTk.PhotoImage(img2)
         f_lbl3 = Label(self.root, image=self.photoimg3)
         f_lbl3.place(x=1000, y=0, width=400, height=130)
 
-        img3 = Image.open(r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\4.jpg")
+        img3 = Image.open(r"C:\Users\srave\Desktop\images - Copy\4.jpg")
         img3 = img3.resize((1530, 710), Image.LANCZOS)
         self.photoimg_bg = ImageTk.PhotoImage(img3)
         bg_img = Label(self.root, image=self.photoimg_bg)
@@ -223,14 +223,14 @@ class Student:
                 conn = mysql.connector.connect(
                     host="localhost",
                     username="root",
-                    password="Nandini@24",
+                    password="1234",
                     database="face"
                 )
                 if conn.is_connected():
                     my_cursor = conn.cursor()
 
                     # Execute insert statement
-                    my_cursor.execute("""
+                    my_cursor.execute(""" 
                         INSERT INTO student (dep, course, year, semester, student_id, student_Name, phone_No, Email_ID, gender,Takephotosample) 
                         VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
                     """, (
@@ -260,7 +260,7 @@ class Student:
                     conn.close()
 
     def fetch_data(self):
-        conn = mysql.connector.connect(host="localhost", user="root", password="Nandini@24", database="face")
+        conn = mysql.connector.connect(host="localhost", user="root", password="1234", database="face")
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM student")
         rows = cursor.fetchall()
@@ -275,22 +275,23 @@ class Student:
         cursor_row = self.student_table.focus()
         content = self.student_table.item(cursor_row)
         row = content['values']
-        self.var_dep.set(row[0])
-        self.var_course.set(row[1])
-        self.var_year.set(row[2])
-        self.var_semester.set(row[3])
-        self.var_id.set(row[4])
-        self.var_name.set(row[5])
-        self.var_phone.set(row[6])
-        self.var_email.set(row[7])
-        self.var_gender.set(row[8])
+        if row:
+            self.var_dep.set(row[0])
+            self.var_course.set(row[1])
+            self.var_year.set(row[2])
+            self.var_semester.set(row[3])
+            self.var_id.set(row[4])
+            self.var_name.set(row[5])
+            self.var_phone.set(row[6])
+            self.var_email.set(row[7])
+            self.var_gender.set(row[8])
 
     def update_student(self):
         if self.var_dep.get() == "select dept" or self.var_course.get() == "select Course" or self.var_year.get() == "select year" or self.var_semester.get() == "select semester" or self.var_id.get() == "" or self.var_name.get() == "" or self.var_phone.get() == "" or self.var_email.get() == "" or self.var_gender.get() == "select gender":
             messagebox.showerror("Error", "All fields are required", parent=self.root)
         else:
             try:
-                conn = mysql.connector.connect(host="localhost", user="root", password="Nandini@24", database="face")
+                conn = mysql.connector.connect(host="localhost", user="root", password="1234", database="face")
                 cursor = conn.cursor()
                 cursor.execute("UPDATE student SET dep=%s, course=%s, year=%s, semester=%s, student_Name=%s, phone_No=%s, Email_ID=%s, Gender=%s WHERE student_ID=%s", 
                                (self.var_dep.get(), self.var_course.get(), self.var_year.get(), self.var_semester.get(), self.var_name.get(), self.var_phone.get(), self.var_email.get(), self.var_gender.get(), self.var_id.get()))
@@ -306,7 +307,7 @@ class Student:
             messagebox.showerror("Error", "Student ID must be required", parent=self.root)
         else:
             try:
-                conn = mysql.connector.connect(host="localhost", user="root", password="Nandini@24", database="face")
+                conn = mysql.connector.connect(host="localhost", user="root", password="1234", database="face")
                 cursor = conn.cursor()
                 cursor.execute("DELETE FROM student WHERE student_id=%s", (self.var_id.get(),))
                 conn.commit()
@@ -330,7 +331,6 @@ class Student:
 #====================generate photo sample======================================
 
     def generate_dataset(self):
-    # Check if any required fields are empty
         if (self.var_dep.get() == "select dept" or 
             self.var_course.get() == "select Course" or 
             self.var_year.get() == "select year" or 
@@ -340,90 +340,97 @@ class Student:
             self.var_phone.get() == "" or 
             self.var_email.get() == "" or 
             self.var_gender.get() == "select gender"):
-            
+
             messagebox.showerror("Error", "All fields are required", parent=self.root)
-        else:
-            try:
-                # Connect to the database
-                conn = mysql.connector.connect(
-                    host="localhost", 
-                    user="root", 
-                    password="Nandini@24", 
-                    database="face"
+            return
+
+        try:
+            # Connect to database
+            conn = mysql.connector.connect(
+                host="localhost", 
+                user="root", 
+                password="1234", 
+                database="face"
+            )
+            my_cursor = conn.cursor()
+
+            # Update student details
+            my_cursor.execute(
+                "UPDATE student SET dep=%s, course=%s, year=%s, semester=%s, student_Name=%s, "
+                "phone_No=%s, Email_ID=%s, Gender=%s WHERE student_ID=%s",
+                (
+                    self.var_dep.get(), 
+                    self.var_course.get(), 
+                    self.var_year.get(), 
+                    self.var_semester.get(),
+                    self.var_name.get(), 
+                    self.var_phone.get(), 
+                    self.var_email.get(), 
+                    self.var_gender.get(), 
+                    self.var_id.get()
                 )
-                my_cursor = conn.cursor()
+            )
+            conn.commit()
+            conn.close()
 
-                # Update student data
-                my_cursor.execute(
-                    "UPDATE student SET dep=%s, course=%s, year=%s, semester=%s, student_Name=%s, "
-                    "phone_No=%s, Email_ID=%s, Gender=%s WHERE student_ID=%s",
-                    (
-                        self.var_dep.get(), 
-                        self.var_course.get(), 
-                        self.var_year.get(), 
-                        self.var_semester.get(),
-                        self.var_name.get(), 
-                        self.var_phone.get(), 
-                        self.var_email.get(), 
-                        self.var_gender.get(), 
-                        self.var_id.get()
-                    )
-                )
-                conn.commit()
-                conn.close()
-                
-                # Initialize face detection
-                face_classifier = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+            # Load face detector
+            face_classifier = cv2.CascadeClassifier(r"D:\smart-class-attendance\smart-class-attendance-\haarcascade_frontalface_default .xml")
 
-                def face_cropped(img):
-                    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                    faces = face_classifier.detectMultiScale(gray, 1.3, 5)
-                    if len(faces) == 0:  # No face detected
-                        return None
-                    for (x, y, w, h) in faces:
-                        return img[y:y+h, x:x+w]
+            def face_cropped(img):
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                faces = face_classifier.detectMultiScale(gray, 1.3, 5)
+                if len(faces) == 0:  
+                    return None
+                for (x, y, w, h) in faces:
+                    return img[y:y+h, x:x+w]
 
-                # Ensure the data directory exists
-                if not os.path.exists("data"):
-                    os.makedirs("data")
+            # Ensure dataset folder exists
+            os.makedirs("data", exist_ok=True)
 
-                # Capture images
-                cap = cv2.VideoCapture(0)
-                img_id = 0
-
-                while True:
-                    ret, my_frame = cap.read()
-                    if not ret:
-                        print("Failed to capture frame")
-                        break  # If the frame is not captured correctly, exit the loop
-                    
-                    # Get the cropped face
-                    cropped_face = face_cropped(my_frame)
-                    if cropped_face is not None:
-                        img_id += 1
-                        face = cv2.resize(cropped_face, (450, 450))
-                        face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
-
-                        # Save the image with a unique name
-                        file_name_path = f"data/user.{self.var_id.get()}.{img_id}.jpg"
-                        cv2.imwrite(file_name_path, face)
-
-                        # Display the frame with image ID
-                        cv2.putText(face, str(img_id), (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-                        cv2.imshow("Face Capture", face)
-
-                    # Break after capturing 100 images or on 'Enter' key
-                    if cv2.waitKey(1) == 13 or img_id == 100:
-                        break
-
-                # Release the camera and destroy windows
+            # Capture images
+            cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # Ensure webcam access
+            attempts = 0
+            while attempts < 5:
+                ret, my_frame = cap.read()
+                if ret:
+                    break
+                print("Retrying to access camera...")
+                attempts += 1
+            if not ret:
+                messagebox.showerror("Error", "Could not access camera. Please check your webcam.")
                 cap.release()
-                cv2.destroyAllWindows()
+                return
 
-                messagebox.showinfo("Result", f"Dataset generated for Student ID: {self.var_id.get()}", parent=self.root)
+            img_id = 0
+            while True:
+                ret, my_frame = cap.read()
+                if not ret:
+                    print("Failed to capture frame")
+                    break
 
-            except Exception as e:
-                messagebox.showerror("Error", f"Error due to: {str(e)}", parent=self.root)
+                cropped_face = face_cropped(my_frame)
+                if cropped_face is not None:
+                    img_id += 1
+                    face = cv2.resize(cropped_face, (450, 450))
+                    face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
+
+                    file_name_path = f"data/user.{self.var_id.get()}.{img_id}.jpg"
+                    cv2.imwrite(file_name_path, face)
+
+                    cv2.putText(face, str(img_id), (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                    cv2.imshow("Face Capture", face)
+
+                if cv2.waitKey(1) == 13 or img_id == 100:  # Stop on Enter key or after 100 images
+                    break
+
+            cap.release()
+            cv2.destroyAllWindows()
+
+            messagebox.showinfo("Result", f"Dataset generated for Student ID: {self.var_id.get()}", parent=self.root)
+
+        except Exception as e:
+            messagebox.showerror("Error", f"Error due to: {str(e)}", parent=self.root)
+            print(f"Error details: {str(e)}")
 
 if __name__ == "__main__":
     root = Tk()

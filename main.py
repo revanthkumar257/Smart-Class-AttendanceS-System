@@ -1,14 +1,10 @@
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
-from student import Student
-from developer import Developer
-from help import Help
+
 from time import strftime
 from datetime import datetime
-from train import  Train
-from attendance import Attendance
-from face_recognition import Face_Recognition
+
 import os
 
 class FACE_RECOGNITION:
@@ -18,10 +14,10 @@ class FACE_RECOGNITION:
         self.root.title("Face Recognition System")
 
         # Load and resize images
-        self.photoimg1 = self.load_image(r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\1.jpg", (500, 130))
-        self.photoimg2 = self.load_image(r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\2.jpeg", (500, 130))
-        self.photoimg3 = self.load_image(r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\3.jpeg", (500, 130))
-        self.photoimg_bg = self.load_image(r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\4.jpg", (1530, 710))
+        self.photoimg1 = self.load_image(r"C:\Users\srave\Desktop\images - Copy\1.jpg", (500, 130))
+        self.photoimg2 = self.load_image(r"C:\Users\srave\Desktop\images - Copy\2.jpeg", (500, 130))
+        self.photoimg3 = self.load_image(r"C:\Users\srave\Desktop\images - Copy\3.jpeg", (500, 130))
+        self.photoimg_bg = self.load_image(r"C:\Users\srave\Desktop\images - Copy\4.jpg", (1530, 710))
 
         # Display header images
         if self.photoimg1: Label(self.root, image=self.photoimg1).place(x=0, y=0, width=500, height=130)
@@ -60,14 +56,14 @@ class FACE_RECOGNITION:
     def create_buttons(self, bg_img):
         """Create all the buttons on the main screen."""
         button_config = [
-            ("Student Details", r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\student.jpg", self.student_details),
-            ("Face Detector", r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\face2.jpeg", self.face_data),
-            ("Attendance", r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\6.jpeg", self.attendance),
-            ("Help Desk", r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\7.png", self.help),
-            ("Train Data", r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\8.jpeg", self.train_data),
-            ("Photos", r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\9.jpeg",self.open_img),
-            ("Developer", r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\10.jpeg", self.developer),
-            ("Exit", r"C:\Users\Uday Bolla\OneDrive\Desktop\images\images\11.jpeg", self.exit_system)
+            ("Student Details", r"C:\Users\srave\Desktop\images - Copy\student.jpg", self.student_details),
+            ("Face Detector", r"C:\Users\srave\Desktop\images - Copy\face2.jpeg", self.face_data),
+            ("Attendance", r"C:\Users\srave\Desktop\images - Copy\6.jpeg", self.attendance),
+            ("Help Desk", r"C:\Users\srave\Desktop\images - Copy\7.png", self.help),
+            ("Train Data", r"C:\Users\srave\Desktop\images - Copy\8.jpeg", self.train_data),
+            ("Photos", r"C:\Users\srave\Desktop\images - Copy\9.jpeg",self.open_img),
+            ("Developer", r"C:\Users\srave\Desktop\images - Copy\10.jpeg", self.developer),
+            ("Exit", r"C:\Users\srave\Desktop\images - Copy\11.jpeg", self.exit_system)
         ]
 
         # Button layout

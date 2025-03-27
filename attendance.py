@@ -5,6 +5,10 @@ from tkinter import StringVar
 import os
 from tkinter import filedialog
 import mysql.connector
+
+
+
+
 import csv
 
 
@@ -23,10 +27,11 @@ class Attendance:
         self.var_status = StringVar()
 
         # Load and resize images
-        self.photoimg1 = self.load_image(r"C:\Users\Uday Bolla\OneDrive\Desktop\BTP NANDINI\smart-class-attendence-system\images\images\1.jpg", (500, 130))
-        self.photoimg2 = self.load_image(r"C:\Users\Uday Bolla\OneDrive\Desktop\BTP NANDINI\smart-class-attendence-system\images\images\2.jpeg", (500, 130))
-        self.photoimg3 = self.load_image(r"C:\Users\Uday Bolla\OneDrive\Desktop\BTP NANDINI\smart-class-attendence-system\images\images\3.jpeg", (500, 130))
-        self.photoimg_bg = self.load_image(r"C:\Users\Uday Bolla\OneDrive\Desktop\BTP NANDINI\smart-class-attendence-system\images\images\dev.png", (1530, 710))
+        self.photoimg1 = self.load_image(r"D:\smart-class-attendance\smart-class-attendance-\images\images\1.jpg", (500, 130))
+        self.photoimg2 = self.load_image(r"D:\smart-class-attendance\smart-class-attendance-\images\images\2.jpeg", (500, 130))
+        self.photoimg3 = self.load_image(r"D:\smart-class-attendance\smart-class-attendance-\images\images\3.jpeg",(500, 130))
+
+        self.photoimg_bg = self.load_image(r"D:\smart-class-attendance\smart-class-attendance-\images\images\dev.png", (1530, 710))
 
         # Display header images if loaded successfully
         if self.photoimg1:
@@ -132,29 +137,15 @@ class Attendance:
         cursor_row = self.attendance_table.focus()
         contents = self.attendance_table.item(cursor_row)
         row = contents["values"]
-        
-        # Populate the entry fields with selected row data
-        self.txt_attendance_id.delete(0, "end")
-        self.txt_attendance_id.insert(0, row[0])
 
-        
-        self.txt_name.delete(0, "end")
-        self.txt_name.insert(0, row[1])
-        
-        self.txt_roll.delete(0, "end")
-        self.txt_roll.insert(0, row[2])
+        if row:  # Ensure row is not empty before accessing
+            self.var_name.set(row[0])
+            self.var_roll.set(row[1])
+            self.var_dept.set(row[2])
+            self.var_time.set(row[3])
+            self.var_date.set(row[4])
+            self.var_status.set(row[5])
 
-
-        self.txt_dept.delete(0, "end")
-        self.txt_dept.insert(0, row[3])
-
-        self.txt_time.delete(0, "end")
-        self.txt_time.insert(0, row[4])
-
-        self.txt_date.delete(0, "end")
-        self.txt_date.insert(0, row[5])
-
-        self.combo_attendance.set(row[6])
 
 
 
@@ -232,7 +223,7 @@ class Attendance:
             with mysql.connector.connect(
                 host='localhost',
                 user='root',
-                password='Nandini@24',
+                password='1234',
                 database='face'
             ) as conn:
                 with conn.cursor() as cursor:
